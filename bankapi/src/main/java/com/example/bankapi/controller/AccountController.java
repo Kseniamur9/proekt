@@ -4,8 +4,10 @@ import com.example.bankapi.dao.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,5 +50,14 @@ public class AccountController {
             response.put("error", "Insufficient funds or error");
         }
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/operationList")
+    public ResponseEntity<List<Map<String, Object>>> getOperationList(
+            @RequestParam Long id,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+        List<Map<String, Object>> operations = accountDao.getOperationList(id, startDate, endDate);
+        return ResponseEntity.ok(operations);
     }
 }
