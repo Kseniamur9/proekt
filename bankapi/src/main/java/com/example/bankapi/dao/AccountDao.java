@@ -20,12 +20,12 @@ public class AccountDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    // Маппинг типов (для совместимости с int в БД и строкой в ответе)
+
     private static final Map<Integer, String> TYPE_MAP = new HashMap<>();
     static {
         TYPE_MAP.put(1, "пополнение счета");
         TYPE_MAP.put(2, "снятие со счета");
-        // Добавьте для переводов: 3 = "перевод другому клиенту", 4 = "перевод от другого клиента"
+
     }
 
     public BigDecimal getBalance(Long userId) {
