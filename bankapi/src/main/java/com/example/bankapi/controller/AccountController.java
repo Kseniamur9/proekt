@@ -35,9 +35,7 @@ public class AccountController {
         int result = accountDao.putMoney(id, amount);
         Map<String, Object> response = new HashMap<>();
         response.put("value", result);
-        if (result == 0) {
-            response.put("error", "Error adding money");
-        }
+        if (result == 0) response.put("error", "Error adding money");
         return ResponseEntity.ok(response);
     }
 
@@ -46,9 +44,19 @@ public class AccountController {
         int result = accountDao.takeMoney(id, amount);
         Map<String, Object> response = new HashMap<>();
         response.put("value", result);
-        if (result == 0) {
-            response.put("error", "Insufficient funds or error");
-        }
+        if (result == 0) response.put("error", "Insufficient funds or error");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<Map<String, Object>> transferMoney(
+            @RequestParam Long fromId,
+            @RequestParam Long toId,
+            @RequestParam BigDecimal amount) {
+        int result = accountDao.transferMoney(fromId, toId, amount);
+        Map<String, Object> response = new HashMap<>();
+        response.put("value", result);
+        if (result == 0) response.put("error", "Insufficient funds or error or user not found");
         return ResponseEntity.ok(response);
     }
 
